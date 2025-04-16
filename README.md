@@ -3,7 +3,7 @@
 ## 🎬 Demo
 
 <div align="center">
-  <img src="data/deutsche-bank-analysis.gif" alt="Demo: Deutsche Bank Analysis" width="400">
+  <img src="data/deutsche-bank-analysis.gif" alt="Demo: Deutsche Bank Analysis" width="600">
 </div>
 
 
