@@ -1,0 +1,18 @@
+# Smithery.ai configuration
+startCommand:
+  type: stdio
+  configSchema:
+    {}
+  commandFunction: |-
+    (config) => ({
+      "command": "python",
+      "args": [
+        "-m",
+        "src.financial_reports_mcp",
+        "--transport",
+        "stdio"
+      ],
+      "env": {
+        ...config.env
+      }
+    })
