@@ -147,6 +147,13 @@ For Claude Desktop, add the following configuration:
       ],
       "env": {
         "API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+### Option 3: Run Directly (For development or testing)
 
 ```bash
 # Clone the repository
@@ -161,7 +168,9 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 # Run the server
-python server.py
+python -m src.financial_reports_mcp
+# or
+python src/financial_reports_mcp.py
 ```
 
 ### Option 4: Use FastMCP CLI

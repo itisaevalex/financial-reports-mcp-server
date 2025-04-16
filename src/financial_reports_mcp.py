@@ -321,3 +321,4 @@ def run_cli():
 # Main execution - this allows running the server directly
 if __name__ == "__main__":
     run_cli()
+

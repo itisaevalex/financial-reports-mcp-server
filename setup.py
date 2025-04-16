@@ -34,6 +34,9 @@ setup(
         "python-dotenv>=1.0.0",
     ],
     entry_points={
+        'console_scripts': [
+            'financial-reports-mcp=src.financial_reports_mcp:run_cli',
+        ],
         "console_scripts": [
             "financial-reports-mcp=main:run_cli",
         ],
