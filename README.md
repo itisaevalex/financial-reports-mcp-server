@@ -1,3 +1,5 @@
+[![smithery badge](https://smithery.ai/badge/@itisaevalex/financial-reports-mcp-server)](https://smithery.ai/server/@itisaevalex/financial-reports-mcp-server)
+
 # Financial Reports MCP Server
 
 ## 🎬 Demo
@@ -65,6 +67,17 @@ For Claude Desktop, add the following configuration:
     }
   }
 }
+```
+
+---
+
+### 🚀 Option 2: Smithery CLI (Claude)
+
+[![smithery badge](https://smithery.ai/badge/@itisaevalex/financial-reports-mcp-server)](https://smithery.ai/server/@itisaevalex/financial-reports-mcp-server)
+
+For Claude:
+```bash
+npx -y @smithery/cli@latest install @itisaevalex/financial-reports-mcp-server --client claude --key smithery_api_key
 ```
 
 ---
