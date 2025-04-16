@@ -5,30 +5,23 @@ services:
       dockerfile: Dockerfile
     image: financial-reports-mcp:latest
     container_name: financial-reports-mcp
-    ports:
-      - "8000:8000"
-    volumes:
-      # Mount for live development (comment out in production)
-      - ./src:/app/src
-      # Mount a local .env file if it exists
-      - ./.env:/app/.env:ro
     environment:
       - API_KEY=${API_KEY:-your_api_key_here}
       - API_BASE_URL=${API_BASE_URL:-https://api.financialreports.eu/}
       - USE_MOCK_API=${USE_MOCK_API:-True}
-      - MCP_HOST=0.0.0.0
-      - MCP_PORT=8000
-    healthcheck:
-      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/mcp/ping').raise_for_status()"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 5s
-    restart: unless-stopped
+      - MCP_TRANSPORT=${MCP_TRANSPORT:-stdio}
+    # When using stdio transport (Claude Desktop), use:
+    # docker-compose run -i financial-reports-mcp
     
-# Example for running the server with the real API:
-# 
-# docker-compose up -d
-# 
-# With API key:
-# API_KEY=your_real_api_key USE_MOCK_API=False docker-compose up -d
+    # When using HTTP/SSE transport, uncomment these:
+    # ports:
+    #  - "${MCP_PORT:-8000}:${MCP_PORT:-8000}"
+    # environment:
+    #  - MCP_HOST=0.0.0.0
+    #  - MCP_PORT=${MCP_PORT:-8000}
+
+# Example for running with stdio (Claude Desktop):
+# docker-compose run -i financial-reports-mcp
+#
+# Example for running with HTTP/SSE:
+# MCP_TRANSPORT=sse docker-compose up -d

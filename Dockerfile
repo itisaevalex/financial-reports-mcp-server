@@ -19,15 +19,9 @@ USER appuser
 ENV API_KEY="your_api_key_here" \
     API_BASE_URL="https://api.financialreports.eu/" \
     USE_MOCK_API="True" \
-    MCP_HOST="0.0.0.0" \
-    MCP_PORT="8000"
+    MCP_TRANSPORT="stdio"
 
-# Add a health check
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-    CMD python -c "import httpx; httpx.get(f'http://localhost:{MCP_PORT}/mcp/ping').raise_for_status()"
-
-# Expose the port the app runs on
-EXPOSE ${MCP_PORT}
-
-# Run the application directly with main.py
-CMD ["python", "main.py", "--host", "0.0.0.0"]
+# Run the application 
+# Note: When used with Claude Desktop, this will be overridden by the command
+# that Claude provides, but for direct docker run commands this is the default
+CMD ["python", "main.py", "--transport", "stdio"]

@@ -20,7 +20,83 @@ An MCP (Model Context Protocol) server for accessing the Financial Reports API, 
 
 There are multiple ways to get up and running with this MCP server:
 
-### Option 1: Install and Run Locally
+### Option 1: Quick Start with uv (Recommended for Claude Desktop)
+
+The simplest way to use this MCP server with Claude Desktop is with the `uv` package manager:
+
+```bash
+# Install uv if you don't have it
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows
+curl -LsSf https://astral.sh/uv/install.ps1 | powershell
+
+# Clone the repository
+git clone <repository-url>
+cd financial-reports-mcp
+
+# Run with uv
+uv run server.py
+```
+
+For Claude Desktop, add the following configuration:
+
+```json
+{
+  "mcpServers": {
+    "financial-reports": {
+      "command": "/path/to/uv",
+      "args": [
+        "--directory",
+        "/absolute/path/to/financial-reports-mcp",
+        "run",
+        "server.py"
+      ]
+    }
+  }
+}
+```
+
+### Option 2: Docker (Recommended for Reproducibility)
+
+For reproducible environments across systems:
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd financial-reports-mcp
+
+# Build the Docker image
+docker build -t financial-reports-mcp .
+
+# Run with Docker
+docker run -i financial-reports-mcp
+```
+
+For Claude Desktop, add the following configuration:
+
+```json
+{
+  "mcpServers": {
+    "financial-reports": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "financial-reports-mcp:latest"
+      ],
+      "env": {
+        "USE_MOCK_API": "True",
+        "API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+### Option 3: Install and Run Locally with pip
 
 ```bash
 # Clone the repository
@@ -41,7 +117,7 @@ cp .env.example .env  # Then edit .env with your settings
 python main.py
 ```
 
-### Option 2: Use with FastMCP CLI
+### Option 4: Use FastMCP CLI
 
 The FastMCP CLI provides tools for development and installation of MCP servers.
 
@@ -56,100 +132,6 @@ fastmcp install main.py --name "Financial Reports API"
 # Or run in development mode
 fastmcp dev main.py
 ```
-
-### Option 3: Install with Python Script
-
-We provide a helper script that handles the installation process:
-
-```bash
-# Run the installation script
-python install.py
-```
-
-### Option 4: Docker
-
-We provide Docker support for easy deployment across environments:
-
-```bash
-# Build and run with Docker Compose
-docker-compose up
-
-# Or build and run the Docker container directly
-docker build -t financial-reports-mcp .
-docker run -p 8000:8000 financial-reports-mcp
-```
-
-### Option 5: Install as Python Package
-
-```bash
-# Install directly from the directory
-pip install .
-
-# Or in development mode
-pip install -e .
-```
-
-## Using an MCP Client
-
-### Claude Desktop Configuration
-
-Add the following configuration to Claude Desktop:
-
-```json
-{
-  "mcpServers": {
-    "financial-reports": {
-      "command": "python",
-      "args": ["-m", "financial-reports-mcp-server"]
-    }
-  }
-}
-```
-
-### Using with uvx
-
-If you have `uv` / `uvx` installed (recommended for cross-platform compatibility):
-
-```json
-{
-  "mcpServers": {
-    "financial-reports": {
-      "command": "uvx",
-      "args": ["financial-reports-mcp-server"]
-    }
-  }
-}
-```
-
-### Using with Docker
-
-```json
-{
-  "mcpServers": {
-    "financial-reports": {
-      "command": "docker",
-      "args": ["run", "--rm", "-p", "8000:8000", "financial-reports-mcp"],
-      "env": {
-        "API_KEY": "your_api_key_here",
-        "USE_MOCK_API": "True" 
-      }
-    }
-  }
-}
-```
-
-## Cross-Platform Compatibility
-
-The server can be run on:
-
-- **Linux**: All methods supported
-- **macOS**: All methods supported 
-- **Windows**: All methods supported, but using `uvx` is recommended for the most consistent experience
-
-For Windows users specifically:
-- Make sure to use the correct path notation in configurations (`\` vs `/`)
-- If using PowerShell, you may need to adjust environment variable syntax
-- Docker Desktop for Windows works well for containerized usage
 
 ## Configuration
 
@@ -166,7 +148,8 @@ USE_MOCK_API=True
 
 ## Project Structure
 
-- `main.py` - Main entry point
+- `server.py` - Simple single-file implementation (recommended for uv)
+- `main.py` - Main entry point for more customizable usage
 - `src/` - Source code directory
   - `financial_reports_mcp.py` - MCP server implementation
   - `api_client.py` - API client factory
@@ -216,26 +199,34 @@ Please help me:
 3. Summarize key financial metrics from these reports if available
 ```
 
-## Mock API Mode
+## Cross-Platform Compatibility
 
-The server can run in mock mode using predefined responses. This is useful for:
-- Development and testing without API access
-- Demonstrations and presentations
-- Offline use
+The server can be run on:
 
-To use the real API, update the `.env` file with your API key and set `USE_MOCK_API=False`.
+- **Linux**: All methods supported
+- **macOS**: All methods supported 
+- **Windows**: All methods supported, but using `uv` is recommended for Claude Desktop
+
+For Windows users specifically:
+- For Claude Desktop, uv-based installation is recommended
+- Docker requires Docker Desktop for Windows
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **"Module not found" errors**: Make sure all dependencies are installed with `pip install -r requirements.txt`
+1. **Communication Issues with Claude Desktop**: 
+   - Ensure you're using stdio transport when configuring for Claude Desktop
+   - For Docker, make sure to include the `-i` flag for interactive mode
+
+2. **"Module not found" errors**: 
+   - Make sure all dependencies are installed with `pip install -r requirements.txt`
    
-2. **Cannot connect to the MCP server**: Check if the server is running and accessible from the client
+3. **Cannot connect to the MCP server**: 
+   - Check if the server is running and accessible from the client
 
-3. **Authentication errors with the API**: Verify your API key in the `.env` file
-
-4. **Port already in use**: Change the port in the Docker configuration or when running the server
+4. **Authentication errors with the API**: 
+   - Verify your API key in the `.env` file
 
 ### Logs
 
@@ -243,31 +234,6 @@ When running directly, logs are output to the console. For Docker, you can view 
 
 ```bash
 docker logs <container-id>
-```
-
-## Development
-
-Contributions are welcome! To contribute:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-### Development Setup
-
-```bash
-# Clone the repository
-git clone <repo-url>
-cd financial-reports-mcp
-
-# Create a virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dev dependencies
-pip install -r requirements.txt
-pip install -e .
 ```
 
 ## License
