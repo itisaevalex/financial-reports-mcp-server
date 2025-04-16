@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  financial-reports-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: financial-reports-mcp:latest
+    container_name: financial-reports-mcp
+    ports:
+      - "${MCP_PORT:-8000}:${MCP_PORT:-8000}"
+    volumes:
+      # Mount for live development (comment out in production)
+      - ./src:/app/src
+      # Mount a local .env file if it exists
+      - ./.env:/app/.env:ro
+    environment:
+      - API_KEY=${API_KEY:-your_api_key_here}
+      - API_BASE_URL=${API_BASE_URL:-https://api.financialreports.eu/}
+      - USE_MOCK_API=${USE_MOCK_API:-True}
+      - MCP_HOST=0.0.0.0
+      - MCP_PORT=${MCP_PORT:-8000}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get(f'http://localhost:{int(\"$MCP_PORT\")}/mcp/ping').raise_for_status()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+    
+# Example for running the server with the real API:
+# 
+# docker-compose up -d
+# 
+# With API key:
+# API_KEY=your_real_api_key USE_MOCK_API=False docker-compose up -d
+#
+# With different port:
+# MCP_PORT=9000 docker-compose up -d

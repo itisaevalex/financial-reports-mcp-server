@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "financial-reports": {
+      "command": "docker",
+      "args": ["run", "--rm", "-p", "8000:8000", "financial-reports-mcp:latest"],
+      "env": {
+        "USE_MOCK_API": "True",
+        "API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}

@@ -4,6 +4,9 @@ A Model Context Protocol (MCP) server for accessing financial reports,
 company information, and related data from the Financial Reports API.
 """
 
+import os
+import argparse
+from dotenv import load_dotenv
 from fastmcp import FastMCP, Context
 from typing import List, Dict, Any, Optional
 from pydantic import BaseModel, Field
@@ -285,6 +288,36 @@ then search for banking companies using search_companies,
 and finally use get_latest_filings with filing_type="ANNREP" to find annual reports.
 """
 
+def run_cli():
+    """
+    Command-line entry point for the Financial Reports MCP server.
+    This function is used as the entry point in setup.py.
+    """
+    # Load environment variables
+    load_dotenv()
+    
+    # Parse arguments
+    parser = argparse.ArgumentParser(description="Financial Reports MCP Server")
+    parser.add_argument(
+        "--host", 
+        default=os.getenv("MCP_HOST", "127.0.0.1"),
+        help="Host address to bind the server to (default: 127.0.0.1 or MCP_HOST env var)"
+    )
+    parser.add_argument(
+        "--port", 
+        type=int, 
+        default=int(os.getenv("MCP_PORT", "8000")),
+        help="Port to run the server on (default: 8000 or MCP_PORT env var)"
+    )
+    args = parser.parse_args()
+    
+    # Print startup information
+    print(f"Starting Financial Reports MCP Server on {args.host}:{args.port}")
+    print(f"Mock API mode: {os.getenv('USE_MOCK_API', 'True')}")
+    
+    # Run the server
+    mcp.run(host=args.host, port=args.port)
+
 # Main execution - this allows running the server directly
 if __name__ == "__main__":
-    mcp.run()
+    run_cli()
