@@ -204,10 +204,14 @@ async def get_company_profile(company_id: int) -> str:
         
     return output
 
-@mcp.resource("financial-reports://companies/{company_id}/recent-filings")
-async def get_company_recent_filings(company_id: int, limit: int = 5) -> str:
+@mcp.resource("financial-reports://companies/{company_id}/recent-filings/{limit}")
+async def get_company_recent_filings(company_id: int, limit: int) -> str:
     """
     Retrieve a list of the company's most recent filings.
+    
+    Args:
+        company_id: The unique ID of the company
+        limit: Maximum number of filings to return
     """
     api_client = await APIClient.create()
     
@@ -237,6 +241,18 @@ async def get_company_recent_filings(company_id: int, limit: int = 5) -> str:
         output += "\n"
             
     return output
+
+# Add a simpler version that uses a default limit
+@mcp.resource("financial-reports://companies/{company_id}/recent-filings")
+async def get_company_recent_filings_default(company_id: int) -> str:
+    """
+    Retrieve a list of the company's 5 most recent filings.
+    
+    Args:
+        company_id: The unique ID of the company
+    """
+    # Call the other resource with default limit of 5
+    return await get_company_recent_filings(company_id, 5)
 
 # Prompts for common tasks
 
