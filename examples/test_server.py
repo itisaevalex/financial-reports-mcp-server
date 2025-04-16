@@ -28,6 +28,9 @@ async def test_mcp_server_direct():
     print("Testing Financial Reports MCP Server using direct import...")
     
     # Import the server directly
+    import sys
+    import os
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
     from src.financial_reports_mcp import mcp
     
     # Create a simple transport directly to the MCP object

@@ -13,16 +13,74 @@ An MCP (Model Context Protocol) server for accessing the Financial Reports API, 
 ## Prerequisites
 
 - Python 3.9+
-- FastMCP
-- dotenv for environment variable management
+- Docker (recommended)
+- FastMCP (if running locally)
+- dotenv for environment variable management (if running locally)
+
+**Note:** The server now uses only the real Financial Reports API. All mock API logic and configuration has been removed for simplicity and reliability.
 
 ## 🚀 Getting Started
 
 There are multiple ways to get up and running with this MCP server:
 
-### Option 1: Quick Start with uv (Recommended for Claude Desktop)
+### 🚀 Option 1: Docker (Recommended)
 
-The simplest way to use this MCP server with Claude Desktop is with the `uv` package manager:
+**Docker is the recommended way** to run this MCP server for reproducibility, ease of setup, and isolation from your system Python. This is ideal for Claude Desktop, CI, and onboarding.
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd financial-reports-mcp
+
+# Build the Docker image
+docker build -t financial-reports-mcp .
+
+# Run with Docker
+docker run -i financial-reports-mcp
+```
+
+For Claude Desktop, add the following configuration:
+
+```json
+{
+  "mcpServers": {
+    "financial-reports": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "financial-reports-mcp:latest"
+      ],
+      "env": {
+        "API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+---
+
+## Examples
+
+All example scripts and configs are now located in the `examples/` directory, e.g.:
+
+- `examples/test_server.py` — Run the full MCP test suite
+- `examples/docker_claude_config.json` — Example Claude Desktop config for Docker
+- `examples/uvx_claude_config.json` — Example Claude Desktop config for uv
+- `examples/python_client_example.py` — Example Python client usage
+
+Run the test suite:
+```bash
+python examples/test_server.py
+```
+
+---
+
+### Option 2: Quick Start with uv (For advanced users or dev)
+
+You can also use the `uv` package manager if you prefer a local Python environment:
 
 ```bash
 # Install uv if you don't have it
@@ -88,15 +146,7 @@ For Claude Desktop, add the following configuration:
         "financial-reports-mcp:latest"
       ],
       "env": {
-        "USE_MOCK_API": "True",
         "API_KEY": "your_api_key_here"
-      }
-    }
-  }
-}
-```
-
-### Option 3: Install and Run Locally with pip
 
 ```bash
 # Clone the repository
@@ -110,11 +160,8 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Set up configuration
-cp .env.example .env  # Then edit .env with your settings
-
-# Run the server directly
-python main.py
+# Run the server
+python server.py
 ```
 
 ### Option 4: Use FastMCP CLI
@@ -127,10 +174,10 @@ pip install fastmcp
 
 # Then install the Financial Reports MCP server
 # From the project directory:
-fastmcp install main.py --name "Financial Reports API"
+fastmcp install server.py --name "Financial Reports API"
 
 # Or run in development mode
-fastmcp dev main.py
+fastmcp dev server.py
 ```
 
 ## Configuration
@@ -161,6 +208,8 @@ USE_MOCK_API=True
 - `Dockerfile` & `docker-compose.yml` - Docker configuration
 - `setup.py` - Package installation configuration
 - `install.py` - Helper for Claude Desktop installation
+- `examples/` - Example scripts and configs
+- `scripts/` - Install scripts
 
 ## Available Tools
 
