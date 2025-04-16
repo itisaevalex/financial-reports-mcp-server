@@ -23,9 +23,9 @@ class CompanySearchParams(BaseModel):
     page_size: int = Field(10, description="Number of results per page (max 100)")
 
 class FilingSearchParams(BaseModel):
-    """Parameters for searching filings."""
-    company_id: Optional[int] = Field(None, description="Optional filter by company ID")
-    filing_type: Optional[str] = Field(None, description="Optional filter by filing type code (e.g., 'ANNREP')")
+    """Parameters for searching filings (matches real API spec)."""
+    company: Optional[int] = Field(None, description="Optional filter by company ID (real API: 'company')")
+    type: Optional[str] = Field(None, description="Optional filter by filing type code (e.g., 'ANNREP') (real API: 'type')")
     language: Optional[str] = Field(None, description="Optional filter by language code (e.g., 'en', 'de')")
     page: int = Field(1, description="Page number for pagination")
     page_size: int = Field(10, description="Number of results per page (max 100)")
@@ -60,26 +60,26 @@ async def search_companies(params: CompanySearchParams) -> List[Dict[str, Any]]:
     return result.get("results", [])
 
 @mcp.tool()
-async def get_company_detail(company_id: int) -> Dict[str, Any]:
+async def get_company_detail(company: int) -> Dict[str, Any]:
     """
-    Get detailed information about a specific company.
+    Get detailed information about a specific company (real API: 'company').
     
     Args:
-        company_id: The unique identifier for the company
+        company: The unique identifier for the company
     
     Returns:
         Detailed company information
     """
     api_client = await APIClient.create()
-    return await api_client.get_company_detail(company_id)
+    return await api_client.get_company_detail(company)
 
 @mcp.tool()
 async def get_latest_filings(params: FilingSearchParams) -> List[Dict[str, Any]]:
     """
-    Get the latest financial filings, optionally filtered by company or type.
+    Get the latest financial filings, optionally filtered by company or type (real API spec).
     
     Args:
-        params: Search parameters including company_id, filing_type, language, page, and page_size
+        params: Search parameters including company, type, language, page, and page_size
     
     Returns:
         List of filings
@@ -87,8 +87,8 @@ async def get_latest_filings(params: FilingSearchParams) -> List[Dict[str, Any]]
     api_client = await APIClient.create()
     
     result = await api_client.get_filings(
-        company_id=params.company_id,
-        filing_type=params.filing_type,
+        company=params.company,
+        type=params.type,
         language=params.language,
         page=params.page,
         page_size=params.page_size
@@ -170,13 +170,13 @@ async def get_filing_types_resource() -> str:
             
     return output
 
-@mcp.resource("financial-reports://companies/{company_id}/profile")
-async def get_company_profile(company_id: int) -> str:
+@mcp.resource("financial-reports://companies/{company}/profile")
+async def get_company_profile(company: int) -> str:
     """
-    Retrieve a formatted company profile.
+    Retrieve a formatted company profile (real API: 'company').
     """
     api_client = await APIClient.create()
-    data = await api_client.get_company_detail(company_id)
+    data = await api_client.get_company_detail(company)
     
     output = f"# {data.get('name', 'Company')} Profile\n\n"
     output += f"**ISIN:** {data.get('isin', 'N/A')}\n"
@@ -207,28 +207,24 @@ async def get_company_profile(company_id: int) -> str:
         
     return output
 
-@mcp.resource("financial-reports://companies/{company_id}/recent-filings/{limit}")
-async def get_company_recent_filings(company_id: int, limit: int) -> str:
+@mcp.resource("financial-reports://companies/{company}/recent-filings/{limit}")
+async def get_company_recent_filings(company: int, limit: int) -> str:
     """
     Retrieve a list of the company's most recent filings.
     
     Args:
-        company_id: The unique ID of the company
+        company: The unique ID of the company
         limit: Maximum number of filings to return
     """
     api_client = await APIClient.create()
     
     # Get company info to display name
-    company_data = await api_client.get_company_detail(company_id)
+    company_data = await api_client.get_company_detail(company)
     company_name = company_data.get("name", "Company")
     
     # Get filings
-    filings_result = await api_client.get_filings(
-        company_id=company_id,
-        page=1,
-        page_size=limit
-    )
-    filings = filings_result.get("results", [])
+    result = await api_client.get_filings(company=company, page_size=limit)
+    filings = result.get("results", [])
     
     output = f"# Recent Filings for {company_name}\n\n"
     
@@ -246,16 +242,16 @@ async def get_company_recent_filings(company_id: int, limit: int) -> str:
     return output
 
 # Add a simpler version that uses a default limit
-@mcp.resource("financial-reports://companies/{company_id}/recent-filings")
-async def get_company_recent_filings_default(company_id: int) -> str:
+@mcp.resource("financial-reports://companies/{company}/recent-filings")
+async def get_company_recent_filings_default(company: int) -> str:
     """
-    Retrieve a list of the company's 5 most recent filings.
+    Retrieve a list of the company's 5 most recent filings (real API: 'company').
     
     Args:
-        company_id: The unique ID of the company
+        company: The unique ID of the company
     """
     # Call the other resource with default limit of 5
-    return await get_company_recent_filings(company_id, 5)
+    return await get_company_recent_filings(company, 5)
 
 # Prompts for common tasks
 

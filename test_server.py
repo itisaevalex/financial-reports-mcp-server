@@ -17,8 +17,8 @@ class CompanySearchParams(BaseModel):
     page_size: int = 10
 
 class FilingSearchParams(BaseModel):
-    company_id: int = None
-    filing_type: str = None
+    company: int = None
+    type: str = None
     language: str = None
     page: int = 1
     page_size: int = 10
@@ -65,7 +65,7 @@ async def test_mcp_server_direct():
         # Test get_company_detail
         print("\nTesting get_company_detail...")
         try:
-            result = await client.call_tool("get_company_detail", {"company_id": 1})
+            result = await client.call_tool("get_company_detail", {"company": 1})
             print(f"Success! Got company details")
         except Exception as e:
             print(f"Error: {e}")
