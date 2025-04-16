@@ -1,0 +1,47 @@
+{
+  "id": 1001,
+  "title": "Annual Report 2024",
+  "company": {
+    "id": 1,
+    "name": "Deutsche Bank AG",
+    "isin": "DE0005140008",
+    "lei": "7LTWFZYICNSX8D621K86",
+    "country": "DE"
+  },
+  "filing_type": {
+    "id": 1,
+    "code": "ANNREP",
+    "name": "Annual Report",
+    "description": "Comprehensive annual report including financial statements, management discussion and analysis, and other required disclosures"
+  },
+  "release_datetime": "2025-03-15T09:30:00Z",
+  "language": {
+    "code": "en",
+    "name": "English"
+  },
+  "document_url": "https://api.financialreports.eu/documents/db_annual_2024.pdf",
+  "dissemination_datetime": "2025-03-15T09:35:00Z",
+  "added_to_platform": "2025-03-15T10:15:22Z",
+  "fiscal_year": "2024",
+  "fiscal_period": "FY",
+  "page_count": 245,
+  "file_size_kb": 15240,
+  "document_format": "PDF",
+  "summary": "Deutsche Bank AG's Annual Report for the fiscal year 2024, highlighting financial performance, strategic initiatives, and corporate governance. The report presents a comprehensive overview of the bank's operations across global markets.",
+  "key_metrics": {
+    "revenue_eur_billions": 28.9,
+    "net_income_eur_billions": 4.2,
+    "eps_eur": 2.05,
+    "roe_percent": 7.8,
+    "assets_under_management_eur_trillions": 1.65
+  },
+  "sections": [
+    "Management Report",
+    "Financial Statements",
+    "Notes to the Consolidated Financial Statements",
+    "Independent Auditor's Report",
+    "Corporate Governance Statement",
+    "Sustainability Report Summary",
+    "Risk Report"
+  ]
+}

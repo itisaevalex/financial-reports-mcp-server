@@ -1,0 +1,147 @@
+{
+  "count": 120,
+  "next": "https://api.financialreports.eu/companies/?page=2",
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "name": "Deutsche Bank AG",
+      "isin": "DE0005140008",
+      "lei": "7LTWFZYICNSX8D621K86",
+      "country": "DE",
+      "description": "Deutsche Bank AG is a German multinational investment bank and financial services company headquartered in Frankfurt, Germany.",
+      "sector": {
+        "id": 40,
+        "code": "40",
+        "name": "Financials"
+      },
+      "industry_group": {
+        "id": 4010,
+        "code": "4010",
+        "name": "Banks"
+      },
+      "industry": {
+        "id": 401010,
+        "code": "401010",
+        "name": "Banks"
+      },
+      "sub_industry": {
+        "id": 40101010,
+        "code": "40101010",
+        "name": "Diversified Banks"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Siemens AG",
+      "isin": "DE0007236101",
+      "lei": "5299001GRIUJA0RE2G74",
+      "country": "DE",
+      "description": "Siemens AG is a German multinational conglomerate company headquartered in Munich and the largest industrial manufacturing company in Europe.",
+      "sector": {
+        "id": 20,
+        "code": "20",
+        "name": "Industrials"
+      },
+      "industry_group": {
+        "id": 2010,
+        "code": "2010",
+        "name": "Capital Goods"
+      },
+      "industry": {
+        "id": 201060,
+        "code": "201060",
+        "name": "Electrical Equipment"
+      },
+      "sub_industry": {
+        "id": 20106010,
+        "code": "20106010",
+        "name": "Electrical Components & Equipment"
+      }
+    },
+    {
+      "id": 3,
+      "name": "BNP Paribas SA",
+      "isin": "FR0000131104",
+      "lei": "R0MUWSFPU8MPRO8K5P83",
+      "country": "FR",
+      "description": "BNP Paribas SA is a French international banking group. It is the world's 8th largest bank by total assets.",
+      "sector": {
+        "id": 40,
+        "code": "40",
+        "name": "Financials"
+      },
+      "industry_group": {
+        "id": 4010,
+        "code": "4010",
+        "name": "Banks"
+      },
+      "industry": {
+        "id": 401010,
+        "code": "401010",
+        "name": "Banks"
+      },
+      "sub_industry": {
+        "id": 40101010,
+        "code": "40101010",
+        "name": "Diversified Banks"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Volkswagen AG",
+      "isin": "DE0007664039",
+      "lei": "529900NNUPAGGMPXZ705",
+      "country": "DE",
+      "description": "Volkswagen AG is a German multinational automotive manufacturer headquartered in Wolfsburg, Germany.",
+      "sector": {
+        "id": 25,
+        "code": "25",
+        "name": "Consumer Discretionary"
+      },
+      "industry_group": {
+        "id": 2510,
+        "code": "2510",
+        "name": "Automobiles & Components"
+      },
+      "industry": {
+        "id": 251010,
+        "code": "251010",
+        "name": "Automobiles"
+      },
+      "sub_industry": {
+        "id": 25101010,
+        "code": "25101010",
+        "name": "Automobile Manufacturers"
+      }
+    },
+    {
+      "id": 5,
+      "name": "LVMH Moët Hennessy Louis Vuitton SE",
+      "isin": "FR0000121014",
+      "lei": "IOG3RB9TB0QTMYC9N253",
+      "country": "FR",
+      "description": "LVMH Moët Hennessy Louis Vuitton SE, commonly known as LVMH, is a French multinational luxury goods conglomerate.",
+      "sector": {
+        "id": 25,
+        "code": "25",
+        "name": "Consumer Discretionary"
+      },
+      "industry_group": {
+        "id": 2520,
+        "code": "2520",
+        "name": "Consumer Durables & Apparel"
+      },
+      "industry": {
+        "id": 252030,
+        "code": "252030",
+        "name": "Textiles, Apparel & Luxury Goods"
+      },
+      "sub_industry": {
+        "id": 25203010,
+        "code": "25203010",
+        "name": "Apparel, Accessories & Luxury Goods"
+      }
+    }
+  ]
+}

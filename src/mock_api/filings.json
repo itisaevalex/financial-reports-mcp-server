@@ -1,0 +1,112 @@
+{
+  "count": 340,
+  "next": "https://api.financialreports.eu/filings/?page=2",
+  "previous": null,
+  "results": [
+    {
+      "id": 1001,
+      "title": "Annual Report 2024",
+      "company": {
+        "id": 1,
+        "name": "Deutsche Bank AG"
+      },
+      "filing_type": {
+        "id": 1,
+        "code": "ANNREP",
+        "name": "Annual Report"
+      },
+      "release_datetime": "2025-03-15T09:30:00Z",
+      "language": {
+        "code": "en",
+        "name": "English"
+      },
+      "document_url": "https://api.financialreports.eu/documents/db_annual_2024.pdf",
+      "dissemination_datetime": "2025-03-15T09:35:00Z",
+      "added_to_platform": "2025-03-15T10:15:22Z"
+    },
+    {
+      "id": 1002,
+      "title": "Q4 2024 Earnings Release",
+      "company": {
+        "id": 1,
+        "name": "Deutsche Bank AG"
+      },
+      "filing_type": {
+        "id": 2,
+        "code": "EARNREL",
+        "name": "Earnings Release"
+      },
+      "release_datetime": "2025-02-01T08:00:00Z",
+      "language": {
+        "code": "en",
+        "name": "English"
+      },
+      "document_url": "https://api.financialreports.eu/documents/db_q4_2024.pdf",
+      "dissemination_datetime": "2025-02-01T08:05:00Z",
+      "added_to_platform": "2025-02-01T09:30:45Z"
+    },
+    {
+      "id": 1003,
+      "title": "Annual Report 2024",
+      "company": {
+        "id": 2,
+        "name": "Siemens AG"
+      },
+      "filing_type": {
+        "id": 1,
+        "code": "ANNREP",
+        "name": "Annual Report"
+      },
+      "release_datetime": "2025-01-30T10:00:00Z",
+      "language": {
+        "code": "en",
+        "name": "English"
+      },
+      "document_url": "https://api.financialreports.eu/documents/siemens_annual_2024.pdf",
+      "dissemination_datetime": "2025-01-30T10:05:00Z",
+      "added_to_platform": "2025-01-30T11:22:15Z"
+    },
+    {
+      "id": 1004,
+      "title": "Sustainability Report 2024",
+      "company": {
+        "id": 1,
+        "name": "Deutsche Bank AG"
+      },
+      "filing_type": {
+        "id": 3,
+        "code": "SUSREP",
+        "name": "Sustainability Report"
+      },
+      "release_datetime": "2025-03-20T11:00:00Z",
+      "language": {
+        "code": "en",
+        "name": "English"
+      },
+      "document_url": "https://api.financialreports.eu/documents/db_sustainability_2024.pdf",
+      "dissemination_datetime": "2025-03-20T11:15:00Z",
+      "added_to_platform": "2025-03-20T12:45:30Z"
+    },
+    {
+      "id": 1005,
+      "title": "Q4 and Full Year 2024 Results",
+      "company": {
+        "id": 3,
+        "name": "BNP Paribas SA"
+      },
+      "filing_type": {
+        "id": 2,
+        "code": "EARNREL",
+        "name": "Earnings Release"
+      },
+      "release_datetime": "2025-02-06T07:30:00Z",
+      "language": {
+        "code": "en",
+        "name": "English"
+      },
+      "document_url": "https://api.financialreports.eu/documents/bnp_q4_2024.pdf",
+      "dissemination_datetime": "2025-02-06T07:35:00Z",
+      "added_to_platform": "2025-02-06T08:50:22Z"
+    }
+  ]
+}

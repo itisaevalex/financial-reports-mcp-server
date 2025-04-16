@@ -14,7 +14,7 @@ An MCP (Model Context Protocol) server for accessing the Financial Reports API, 
 
 - Python 3.9+
 - FastMCP
-- Financial Reports API key (contact support@financialreports.eu for access)
+- dotenv for environment variable management
 
 ## Installation
 
@@ -29,19 +29,23 @@ pip install -r requirements.txt
 
 ## Configuration
 
-Edit the `financial_reports_mcp.py` file to update your API key:
+Create a `.env` file in the root directory with the following variables:
 
-```python
-# API key - will need to be provided correctly when authenticated
-API_KEY = "your-api-key-here"
 ```
+API_KEY="your_api_key_here"
+API_BASE_URL="https://api.financialreports.eu/"
+USE_MOCK_API=True
+```
+
+- Set `USE_MOCK_API=True` to use mock data (default)
+- Set `USE_MOCK_API=False` to use the real API (requires valid API key)
 
 ## Usage
 
 ### Running the server directly
 
 ```bash
-python financial_reports_mcp.py
+python main.py
 ```
 
 ### Using with Claude Desktop
@@ -49,7 +53,7 @@ python financial_reports_mcp.py
 Install the server in Claude Desktop:
 
 ```bash
-fastmcp install financial_reports_mcp.py
+fastmcp install main.py
 ```
 
 ### Development mode
@@ -57,8 +61,20 @@ fastmcp install financial_reports_mcp.py
 For testing and development:
 
 ```bash
-fastmcp dev financial_reports_mcp.py
+fastmcp dev main.py
 ```
+
+## Project Structure
+
+- `main.py` - Main entry point
+- `src/` - Source code directory
+  - `financial_reports_mcp.py` - MCP server implementation
+  - `api_client.py` - API client factory
+  - `mock_api/` - Mock API implementation
+    - `mock_client.py` - Mock API client
+    - JSON files with mock responses
+- `.env` - Environment variables (not in git)
+- `requirements.txt` - Project dependencies
 
 ## Available Tools
 
@@ -76,16 +92,14 @@ fastmcp dev financial_reports_mcp.py
 - `financial-reports://companies/{company_id}/profile`: Company profile
 - `financial-reports://companies/{company_id}/recent-filings`: Recent filings for a company
 
-## Troubleshooting
+## Mock API Mode
 
-If you encounter "Forbidden" errors, check that your API key is valid and correctly configured in the server.
+The server can run in mock mode using predefined responses. This is useful for:
+- Development and testing without API access
+- Demonstrations and presentations
+- Offline use
 
-## Future Work
-
-- Add caching for frequently accessed data
-- Implement additional filtering options
-- Add support for downloading filing documents
-- Create additional specialized resources for industry data
+To use the real API, update the `.env` file with your API key and set `USE_MOCK_API=False`.
 
 ## License
 

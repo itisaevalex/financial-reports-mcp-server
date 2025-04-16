@@ -1,4 +1,4 @@
 fastmcp>=0.4.1
 httpx>=0.26.0
 pydantic>=2.5.3
-financial-reports-generated-client>=0.2.0
+python-dotenv>=1.0.0

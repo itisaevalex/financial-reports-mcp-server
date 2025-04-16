@@ -1,0 +1,24 @@
+# Environment variables
+.env
+
+# Python virtual environments
+venv/
+env/
+*.pyc
+__pycache__/
+
+# IDE files
+.vscode/
+.idea/
+
+# Testing files
+test_api.py
+test_sdk.py
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Logs
+*.log

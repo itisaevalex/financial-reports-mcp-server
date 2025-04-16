@@ -1,0 +1,55 @@
+{
+  "count": 8,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "code": "ANNREP",
+      "name": "Annual Report",
+      "description": "Comprehensive annual report including financial statements, management discussion and analysis, and other required disclosures."
+    },
+    {
+      "id": 2,
+      "code": "EARNREL",
+      "name": "Earnings Release",
+      "description": "Periodic financial results announcement, typically quarterly or annual."
+    },
+    {
+      "id": 3,
+      "code": "SUSREP",
+      "name": "Sustainability Report",
+      "description": "Reports on environmental, social, and governance (ESG) factors and initiatives."
+    },
+    {
+      "id": 4,
+      "code": "QREP",
+      "name": "Quarterly Report",
+      "description": "Financial report for a three-month period, including financial statements and management commentary."
+    },
+    {
+      "id": 5,
+      "code": "HREP",
+      "name": "Half-Year Report",
+      "description": "Financial report for a six-month period, including financial statements and management commentary."
+    },
+    {
+      "id": 6,
+      "code": "INSREP",
+      "name": "Inside Information",
+      "description": "Ad-hoc disclosure of material non-public information that could affect security prices."
+    },
+    {
+      "id": 7,
+      "code": "PROSPEC",
+      "name": "Prospectus",
+      "description": "Formal document required by financial regulators for public offerings of securities."
+    },
+    {
+      "id": 8,
+      "code": "PROXY",
+      "name": "Proxy Statement",
+      "description": "Document providing shareholders with information necessary for voting at a shareholder meeting."
+    }
+  ]
+}

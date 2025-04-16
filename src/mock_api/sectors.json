@@ -1,0 +1,73 @@
+{
+  "count": 11,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 10,
+      "code": "10",
+      "name": "Energy",
+      "description": "Companies engaged in exploration, production, refining, marketing, storage and transportation of oil, gas, coal and consumable fuels."
+    },
+    {
+      "id": 15,
+      "code": "15",
+      "name": "Materials",
+      "description": "Companies involved in the discovery, development, and processing of raw materials including mining, chemicals, construction materials, metal, paper, and forest products."
+    },
+    {
+      "id": 20,
+      "code": "20",
+      "name": "Industrials",
+      "description": "Companies that produce capital goods, provide commercial services and transportation services including aerospace, defense, machinery, construction, and engineering."
+    },
+    {
+      "id": 25,
+      "code": "25",
+      "name": "Consumer Discretionary",
+      "description": "Companies that provide non-essential goods and services including automobiles, durables, apparel, hotels, restaurants, leisure, media, and retailing."
+    },
+    {
+      "id": 30,
+      "code": "30",
+      "name": "Consumer Staples",
+      "description": "Companies providing essential consumer goods including food, beverages, tobacco, and household products."
+    },
+    {
+      "id": 35,
+      "code": "35",
+      "name": "Health Care",
+      "description": "Companies in healthcare equipment, services, pharmaceuticals, biotechnology, and life sciences sectors."
+    },
+    {
+      "id": 40,
+      "code": "40",
+      "name": "Financials",
+      "description": "Companies involved in banking, diversified financials, insurance, and real estate, including REITs."
+    },
+    {
+      "id": 45,
+      "code": "45",
+      "name": "Information Technology",
+      "description": "Companies providing technology software, hardware, semiconductors, communications equipment, and IT services."
+    },
+    {
+      "id": 50,
+      "code": "50",
+      "name": "Communication Services",
+      "description": "Companies providing telecommunications, media, and entertainment services including wireless, internet, publishing, advertising, broadcasting, and social media."
+    },
+    {
+      "id": 55,
+      "code": "55",
+      "name": "Utilities",
+      "description": "Companies providing electric, gas, water utilities, and independent power producers and energy traders."
+    },
+    {
+      "id": 60,
+      "code": "60",
+      "name": "Real Estate",
+      "description": "Real estate companies and REITs that own, develop, and manage properties, facilities, and infrastructure."
+    }
+  ]
+}
