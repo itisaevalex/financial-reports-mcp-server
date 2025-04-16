@@ -8,7 +8,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="financial-reports-mcp-server",
+    name="financial-reports-mcp",
     version="0.1.0",
     author="Alex Isaev",
     author_email="your.email@example.com",
@@ -35,7 +35,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "financial-reports-mcp-server=src.financial_reports_mcp:run_cli",
+            "financial-reports-mcp=main:run_cli",
         ],
     },
 )
