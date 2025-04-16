@@ -1,11 +1,9 @@
-[![smithery badge](https://smithery.ai/badge/@itisaevalex/financial-reports-mcp-server)](https://smithery.ai/server/@itisaevalex/financial-reports-mcp-server)
-
 # Financial Reports MCP Server
 
 ## 🎬 Demo
 
 <div align="center">
-  <img src="data/deutsche-bank-analysis.gif" alt="Demo: Deutsche Bank Analysis" style="border-radius: 16px; box-shadow:0 2px 8px #0003; max-width: 100%; height: auto;">
+  <img src="data/deutsche-bank-analysis.gif" alt="Demo: Deutsche Bank Analysis" style="border-radius: 16px; box-shadow:0 2px 8px #0003; max-width: 80%; height: auto;">
 </div>
 
 
