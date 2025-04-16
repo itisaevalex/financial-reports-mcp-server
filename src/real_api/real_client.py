@@ -124,7 +124,6 @@ class RealAPIClient:
             except ApiException as e:
                 return {"error": str(e)}
 
-    # --- Existing lower-level methods retained below ---
 
     async def get_filings(self, **filters) -> Dict[str, Any]:
         async with financial_reports_generated_client.ApiClient(self.configuration) as api_client:

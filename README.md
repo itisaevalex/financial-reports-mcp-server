@@ -1,5 +1,12 @@
 # Financial Reports MCP Server
 
+## 🎬 Demo
+
+<div align="center">
+  <img src="data/deutsche-bank-analysis.gif" alt="Demo: Deutsche Bank Analysis" style="border-radius: 16px; box-shadow:0 2px 8px #0003; max-width: 100%; height: auto;">
+</div>
+
+
 An MCP (Model Context Protocol) server for accessing the Financial Reports API, providing tools and resources to access company financial filings, industry classifications, and related data.
 
 ## Features
@@ -296,4 +303,4 @@ docker logs <container-id>
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License with an attribution requirement for Data Alchemy Labs. See [LICENSE](LICENSE) for details.
