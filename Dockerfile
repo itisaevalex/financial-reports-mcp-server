@@ -23,4 +23,4 @@ ENV API_KEY="your_api_key_here" \
 # Run the application 
 # Note: When used with Claude Desktop, this will be overridden by the command
 # that Claude provides, but for direct docker run commands this is the default
-CMD ["python", "main.py", "--transport", "stdio"]
+CMD ["python", "-m", "src.financial_reports_mcp"]
