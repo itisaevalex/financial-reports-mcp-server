@@ -316,7 +316,12 @@ async def list_filing_types() -> List[Dict[str, Any]]:
 @mcp.resource("financial-reports://sectors")
 async def get_sectors_resource() -> str:
     """
-    Retrieve a list of all GICS sectors.
+    Retrieve a list of all GICS sectors as formatted Markdown text.
+    
+    Args:
+        None
+    Returns:
+        str: Markdown-formatted list of GICS sectors.
     """
     api_client = await APIClient.create()
     result = await api_client.get_sectors()
@@ -333,7 +338,12 @@ async def get_sectors_resource() -> str:
 @mcp.resource("financial-reports://filing-types")
 async def get_filing_types_resource() -> str:
     """
-    Retrieve a list of all filing types.
+    Retrieve a list of all filing types as formatted Markdown text.
+    
+    Args:
+        None
+    Returns:
+        str: Markdown-formatted list of filing types.
     """
     api_client = await APIClient.create()
     result = await api_client.get_filing_types()
@@ -350,7 +360,12 @@ async def get_filing_types_resource() -> str:
 @mcp.resource("financial-reports://companies/{company}/profile")
 async def get_company_profile(company: int) -> str:
     """
-    Retrieve a formatted company profile (real API: 'company').
+    Retrieve a formatted company profile for a given company ID as Markdown text.
+    
+    Args:
+        company (int): The unique company ID.
+    Returns:
+        str: Markdown-formatted company profile.
     """
     api_client = await APIClient.create()
     data = await api_client.get_company_detail(company)
@@ -387,11 +402,13 @@ async def get_company_profile(company: int) -> str:
 @mcp.resource("financial-reports://companies/{company}/recent-filings/{limit}")
 async def get_company_recent_filings(company: int, limit: int) -> str:
     """
-    Retrieve a list of the company's most recent filings.
+    Retrieve a list of the company's most recent filings as Markdown text.
     
     Args:
-        company: The unique ID of the company
-        limit: Maximum number of filings to return
+        company (int): The unique ID of the company.
+        limit (int): Maximum number of filings to return.
+    Returns:
+        str: Markdown-formatted list of recent filings.
     """
     api_client = await APIClient.create()
     
@@ -422,10 +439,12 @@ async def get_company_recent_filings(company: int, limit: int) -> str:
 @mcp.resource("financial-reports://companies/{company}/recent-filings")
 async def get_company_recent_filings_default(company: int) -> str:
     """
-    Retrieve a list of the company's 5 most recent filings (real API: 'company').
+    Retrieve a list of the company's 5 most recent filings as Markdown text.
     
     Args:
-        company: The unique ID of the company
+        company (int): The unique ID of the company.
+    Returns:
+        str: Markdown-formatted list of 5 recent filings.
     """
     # Call the other resource with default limit of 5
     return await get_company_recent_filings(company, 5)
