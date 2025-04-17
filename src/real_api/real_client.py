@@ -44,10 +44,17 @@ class RealAPIClient:
         url = f"{self.base_url}/companies/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url} params={params}")
                 resp = await client.get(url, headers=self.headers, params=params)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_company_detail(self, company_id: int) -> Dict[str, Any]:
@@ -57,10 +64,17 @@ class RealAPIClient:
         url = f"{self.base_url}/companies/{company_id}/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url}")
                 resp = await client.get(url, headers=self.headers)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_filings(
@@ -111,10 +125,17 @@ class RealAPIClient:
         url = f"{self.base_url}/filings/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url} params={params}")
                 resp = await client.get(url, headers=self.headers, params=params)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_filing_detail(self, filing_id: int) -> Dict[str, Any]:
@@ -124,10 +145,17 @@ class RealAPIClient:
         url = f"{self.base_url}/filings/{filing_id}/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url}")
                 resp = await client.get(url, headers=self.headers)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_filing_types(self, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
@@ -140,10 +168,17 @@ class RealAPIClient:
         url = f"{self.base_url}/filing-types/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url} params={params}")
                 resp = await client.get(url, headers=self.headers, params=params)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_filing_type(self, filing_type_id: int) -> Dict[str, Any]:
@@ -153,10 +188,17 @@ class RealAPIClient:
         url = f"{self.base_url}/filing-types/{filing_type_id}/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url}")
                 resp = await client.get(url, headers=self.headers)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_industries(self, industry_group: Optional[int] = None, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
@@ -171,10 +213,17 @@ class RealAPIClient:
         url = f"{self.base_url}/industries/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url} params={params}")
                 resp = await client.get(url, headers=self.headers, params=params)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_industry(self, industry_id: int) -> Dict[str, Any]:
@@ -184,10 +233,17 @@ class RealAPIClient:
         url = f"{self.base_url}/industries/{industry_id}/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url}")
                 resp = await client.get(url, headers=self.headers)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_industry_groups(self, sector: Optional[int] = None, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
@@ -202,10 +258,17 @@ class RealAPIClient:
         url = f"{self.base_url}/industry-groups/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url} params={params}")
                 resp = await client.get(url, headers=self.headers, params=params)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_industry_group(self, group_id: int) -> Dict[str, Any]:
@@ -215,10 +278,17 @@ class RealAPIClient:
         url = f"{self.base_url}/industry-groups/{group_id}/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url}")
                 resp = await client.get(url, headers=self.headers)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_sectors(self, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
@@ -231,10 +301,17 @@ class RealAPIClient:
         url = f"{self.base_url}/sectors/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url} params={params}")
                 resp = await client.get(url, headers=self.headers, params=params)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_sector(self, sector_id: int) -> Dict[str, Any]:
@@ -244,10 +321,17 @@ class RealAPIClient:
         url = f"{self.base_url}/sectors/{sector_id}/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url}")
                 resp = await client.get(url, headers=self.headers)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_sub_industries(self, industry: Optional[int] = None, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
@@ -262,10 +346,17 @@ class RealAPIClient:
         url = f"{self.base_url}/sub-industries/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url} params={params}")
                 resp = await client.get(url, headers=self.headers, params=params)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_sub_industry(self, sub_industry_id: int) -> Dict[str, Any]:
@@ -275,10 +366,17 @@ class RealAPIClient:
         url = f"{self.base_url}/sub-industries/{sub_industry_id}/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url}")
                 resp = await client.get(url, headers=self.headers)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_sources(self, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
@@ -289,10 +387,17 @@ class RealAPIClient:
         url = f"{self.base_url}/sources/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url} params={params}")
                 resp = await client.get(url, headers=self.headers, params=params)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_source(self, source_id: int) -> Dict[str, Any]:
@@ -302,10 +407,17 @@ class RealAPIClient:
         url = f"{self.base_url}/sources/{source_id}/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url}")
                 resp = await client.get(url, headers=self.headers)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_processed_filing(self, processed_filing_id: int) -> Dict[str, Any]:
@@ -315,10 +427,17 @@ class RealAPIClient:
         url = f"{self.base_url}/processed-filings/{processed_filing_id}/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url}")
                 resp = await client.get(url, headers=self.headers)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
 
     async def get_schema(self, format: Optional[str] = None, lang: Optional[str] = None) -> Dict[str, Any]:
@@ -333,8 +452,15 @@ class RealAPIClient:
         url = f"{self.base_url}/schema/"
         async with httpx.AsyncClient() as client:
             try:
+                print(f"[API REQUEST] GET {url} params={params}")
                 resp = await client.get(url, headers=self.headers, params=params)
+                print(f"[API RESPONSE] Status: {resp.status_code}")
+                if resp.status_code != 200:
+                    print(f"[API ERROR BODY] {resp.text}")
                 resp.raise_for_status()
-                return resp.json()
+                data = resp.json()
+                print(f"[API RESPONSE BODY] {data}")
+                return data
             except Exception as e:
+                print(f"[API EXCEPTION] {e}")
                 return {"error": str(e)}
