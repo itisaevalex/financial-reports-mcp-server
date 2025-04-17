@@ -268,13 +268,13 @@ class RealAPIClient:
             except Exception as e:
                 return self._format_error(e)
 
-    async def get_industry_groups(self, sector: Optional[int] = None, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
+    async def get_industry_groups(self, sector_code: Optional[str] = None, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Retrieve a list of all available GICS Industry Groups. Can be filtered by parent sector ID.
         """
         params = {'page': page, 'page_size': page_size}
-        if sector is not None:
-            params['sector'] = sector
+        if sector_code is not None:
+            params['sector_code'] = sector_code
         if search:
             params['search'] = search
         url = f"{self.base_url}/industry-groups/"
