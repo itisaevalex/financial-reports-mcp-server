@@ -6,6 +6,7 @@ services:
     image: financial-reports-mcp:latest
     container_name: financial-reports-mcp
     environment:
+      # Values are loaded from .env (not committed to git). Copy .env.example to .env and fill in your real API_KEY. Never commit secrets.
       - API_KEY=${API_KEY:-your_api_key_here}
       - API_BASE_URL=${API_BASE_URL:-https://api.financialreports.eu/}
       - MCP_TRANSPORT=${MCP_TRANSPORT:-stdio}

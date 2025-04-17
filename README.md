@@ -19,7 +19,7 @@ An MCP (Model Context Protocol) server for accessing the Financial Reports API, 
 
 ## Prerequisites
 
-- Python 3.9+
+- Python 3.11+
 - Docker (recommended)
 - FastMCP (if running locally)
 - dotenv for environment variable management (if running locally)
@@ -28,25 +28,35 @@ An MCP (Model Context Protocol) server for accessing the Financial Reports API, 
 
 ## 🚀 Getting Started
 
-There are multiple ways to get up and running with this MCP server:
+There are multiple ways to run this MCP server. Choose one of the following:
 
-### 🚀 Option 1: Docker (Recommended)
+### Option 1: Docker (Recommended)
 
-**Docker is the recommended way** to run this MCP server for reproducibility, ease of setup, and isolation from your system Python. This is ideal for Claude Desktop, CI, and onboarding.
+Docker is the recommended way to run the MCP server for reproducibility, isolation, and ease of use.
 
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd financial-reports-mcp
-
-# Build the Docker image
+# Build (once)
 docker build -t financial-reports-mcp .
 
-# Run with Docker
-docker run -i financial-reports-mcp
+# Run
+docker run --rm -i \
+  -e API_KEY=your_api_key_here \
+  -e API_BASE_URL=https://api.financialreports.eu/ \
+  -e MCP_TRANSPORT=stdio \
+  financial-reports-mcp:latest
 ```
 
-For Claude Desktop, add the following configuration:
+_For Docker Compose users:_
+
+```bash
+# Copy and configure .env
+echo "Copy .env.example to .env and fill in secrets"
+cp .env.example .env
+# Start services
+docker-compose up
+```
+
+For Claude Desktop, use the following configuration. **Pass secrets as `-e` arguments in `args` for maximum compatibility and security:**
 
 ```json
 {
@@ -57,28 +67,46 @@ For Claude Desktop, add the following configuration:
         "run",
         "--rm",
         "-i",
+        "-e", "API_KEY=your_api_key_here",
+        "-e", "API_BASE_URL=https://api.financialreports.eu/",
+        "-e", "MCP_TRANSPORT=stdio",
         "financial-reports-mcp:latest"
-      ],
-      "env": {
-        "API_KEY": "your_api_key_here"
-      }
+      ]
     }
   }
 }
 ```
 
----
+> **Why?** Passing secrets as `-e` arguments in `args` guarantees Docker always receives them, regardless of how the client implements environment variable support. This is the most robust and portable approach for Claude Desktop and similar clients.
 
-### 🚀 Option 2: Smithery CLI (Claude)
+### Option 2: Smithery CLI (for Claude)
 
-[![smithery badge](https://smithery.ai/badge/@itisaevalex/financial-reports-mcp-server)](https://smithery.ai/server/@itisaevalex/financial-reports-mcp-server)
+Use the Smithery CLI to install and run the server in Claude:
 
-For Claude:
 ```bash
-npx -y @smithery/cli@latest install @itisaevalex/financial-reports-mcp-server --client claude --key smithery_api_key
+npx -y @smithery/cli@latest install \
+  @itisaevalex/financial-reports-mcp-server \
+  --client claude \
+  --key smithery_api_key
 ```
 
----
+### Option 3: Local Python (development/testing)
+
+1. Install dependencies:
+```bash
+python -m venv venv           # Create venv
+venv\Scripts\activate        # Activate on Windows
+pip install -r requirements.txt
+```
+
+2. Run the server:
+```bash
+python -m src.financial_reports_mcp
+# or with uv
+uv run src/financial_reports_mcp.py
+```
+
+> **Tip:** If you use `uv`, it automatically loads `.env` from the project root.
 
 ## Examples
 
@@ -94,134 +122,16 @@ Run the test suite:
 python examples/test_server.py
 ```
 
----
-
-### Option 2: Quick Start with uv (For advanced users or dev)
-
-You can also use the `uv` package manager if you prefer a local Python environment:
-
-```bash
-# Install uv if you don't have it
-# macOS/Linux
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Windows
-curl -LsSf https://astral.sh/uv/install.ps1 | powershell
-
-# Clone the repository
-git clone <repository-url>
-cd financial-reports-mcp
-
-# Run with uv
-uv run src/financial_reports_mcp.py
-```
-
-For Claude Desktop, add the following configuration:
-
-```json
-{
-  "mcpServers": {
-    "financial-reports": {
-      "command": "/path/to/uv",
-      "args": [
-        "--directory",
-        "/absolute/path/to/financial-reports-mcp",
-        "run",
-        "src/financial_reports_mcp.py"
-      ]
-    }
-  }
-}
-```
-
-### Option 2: Docker (Recommended for Reproducibility)
-
-For reproducible environments across systems:
-
-```bash
-# Clone the repository
-git clone <repository-url>
-cd financial-reports-mcp
-
-# Build the Docker image
-docker build -t financial-reports-mcp .
-
-# Run with Docker
-docker run -i financial-reports-mcp
-```
-
-For Claude Desktop, add the following configuration:
-
-```json
-{
-  "mcpServers": {
-    "financial-reports": {
-      "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "financial-reports-mcp:latest"
-      ],
-      "env": {
-        "API_KEY": "your_api_key_here"
-      }
-    }
-  }
-}
-```
-
-### Option 3: Run Directly (For development or testing)
-
-```bash
-# Clone the repository
-git clone <repository-url>
-cd financial-reports-mcp
-
-# Create a virtual environment (recommended)
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the server
-python -m src.financial_reports_mcp
-# or
-python src/financial_reports_mcp.py
-
-# Or with uv
-uv run src/financial_reports_mcp.py
-```
-
-> **Tip:** If you use `uv`, it will use your `.env` file automatically if present in the root. For all methods, ensure you run from the root directory.
-
-
-### Option 4: Use FastMCP CLI
-
-The FastMCP CLI provides tools for development and installation of MCP servers.
-
-```bash
-# Install FastMCP globally
-pip install fastmcp
-
-# Then install the Financial Reports MCP server
-# From the project directory:
-fastmcp install src/financial_reports_mcp.py --name "Financial Reports API"
-
-# Or run in development mode
-fastmcp dev src/financial_reports_mcp.py
-```
-
 ## Configuration
 
 Create a `.env` file in the root directory with the following variables:
 
 ```
-API_KEY="your_api_key_here"
-API_BASE_URL="https://api.financialreports.eu/"
-USE_MOCK_API=True
+API_KEY=your_api_key_here
+API_BASE_URL=https://api.financialreports.eu/
+MCP_TRANSPORT=stdio
 ```
+
 ## Project Structure
 
 - `src/` — Source code directory
