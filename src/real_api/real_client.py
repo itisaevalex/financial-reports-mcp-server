@@ -12,6 +12,35 @@ class RealAPIClient:
         self.base_url = base_url.rstrip("/")
         self.headers = {"x-api-key": self.api_key}
 
+    @staticmethod
+    def _format_error(error: Any) -> dict:
+        """
+        Format errors for user-friendly, ASCII-only output.
+        """
+        if hasattr(error, 'status_code'):
+            # HTTP error
+            code = error.status_code
+            try:
+                detail = error.json()
+            except Exception:
+                detail = error.text if hasattr(error, 'text') else str(error)
+            msg = f"Error: HTTP status {code}."
+            if code == 404:
+                msg += " Resource not found. This may be due to an incorrect or outdated code. Try searching by name or listing available options."
+            elif code == 400:
+                msg += " Bad request. Please check your parameters."
+            elif code == 401:
+                msg += " Unauthorized. Check your API key."
+            elif code == 500:
+                msg += " Server error. Please try again later."
+            else:
+                msg += f" {detail}"
+            return {"error": msg}
+        else:
+            # General exception
+            msg = f"Error: {str(error)}"
+            return {"error": msg}
+
     async def get_companies(
         self,
         search: Optional[str] = None,
@@ -51,8 +80,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_company_detail(self, company_id: int) -> Dict[str, Any]:
         """
@@ -67,8 +98,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_filings(
         self,
@@ -125,8 +158,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_filing_detail(self, filing_id: int) -> Dict[str, Any]:
         """
@@ -142,8 +177,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_filing_types(self, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
         """
@@ -161,8 +198,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_filing_type(self, filing_type_id: int) -> Dict[str, Any]:
         """
@@ -179,8 +218,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_industries(self, industry_group: Optional[int] = None, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
         """
@@ -202,8 +243,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_industry(self, industry_id: int) -> Dict[str, Any]:
         """
@@ -220,8 +263,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_industry_groups(self, sector: Optional[int] = None, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
         """
@@ -241,8 +286,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_industry_group(self, group_id: int) -> Dict[str, Any]:
         """
@@ -257,8 +304,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_sectors(self, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
         """
@@ -276,8 +325,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_sector(self, sector_id: int) -> Dict[str, Any]:
         """
@@ -292,8 +343,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_sub_industries(self, industry: Optional[int] = None, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
         """
@@ -313,8 +366,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_sub_industry(self, sub_industry_id: int) -> Dict[str, Any]:
         """
@@ -329,8 +384,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_sources(self, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
         """
@@ -346,8 +403,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_source(self, source_id: int) -> Dict[str, Any]:
         """
@@ -362,8 +421,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_processed_filing(self, processed_filing_id: int) -> Dict[str, Any]:
         """
@@ -378,8 +439,10 @@ class RealAPIClient:
                 data = resp.json()
                 
                 return data
+            except httpx.HTTPStatusError as e:
+                return self._format_error(e.response)
             except Exception as e:
-                return {"error": str(e)}
+                return self._format_error(e)
 
     async def get_schema(self, format: Optional[str] = None, lang: Optional[str] = None) -> Dict[str, Any]:
         """
