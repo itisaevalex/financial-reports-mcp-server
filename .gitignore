@@ -4,6 +4,9 @@
 # Python virtual environments
 venv/
 env/
+conda/
+
+# Python cache
 *.pyc
 __pycache__/
 

@@ -1,7 +1,6 @@
 """
 API client factory for Financial Reports API.
-This module provides a factory for creating either a real API client
-or a mock client depending on configuration.
+This module provides a factory for creating the real API client only.
 """
 
 import os
@@ -15,7 +14,6 @@ load_dotenv()
 # Use environment variables with defaults
 API_KEY = os.getenv("API_KEY", "your_api_key_here")
 API_BASE_URL = os.getenv("API_BASE_URL", "https://api.financialreports.eu/")
-
 
 class APIClient:
     """

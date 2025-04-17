@@ -8,23 +8,27 @@ import os
 import argparse
 from dotenv import load_dotenv
 from fastmcp import FastMCP, Context
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Union
 from pydantic import BaseModel, Field
 
 from src.api_client import APIClient
 
 class CompanySearchParams(BaseModel):
-    """Parameters for searching companies."""
-    search_term: str = Field(..., description="Text to search for in company names or descriptions")
-    country: Optional[str] = Field(None, description="Optional filter by country code (ISO Alpha-2, e.g., 'US', 'GB', 'DE')")
+    """Parameters for searching companies (matches real API spec)."""
+    search: Optional[str] = Field(None, description="Text to search for in company names, ISINs, or LEI")
+    countries: Optional[Union[str, List[str]]] = Field(None, description="Filter by one or more country codes (ISO Alpha-2, comma-separated string or list)")
     sector: Optional[str] = Field(None, description="Optional filter by GICS sector code")
+    industry_group: Optional[str] = Field(None, description="Optional filter by GICS industry group code")
     industry: Optional[str] = Field(None, description="Optional filter by GICS industry code")
+    sub_industry: Optional[str] = Field(None, description="Optional filter by GICS sub-industry code")
     page: int = Field(1, description="Page number for pagination")
     page_size: int = Field(10, description="Number of results per page (max 100)")
 
 class FilingSearchParams(BaseModel):
     """Parameters for searching filings (matches real API spec)."""
     company: Optional[int] = Field(None, description="Optional filter by company ID (real API: 'company')")
+    company_isin: Optional[str] = Field(None, description="Optional filter by company ISIN")
+    countries: Optional[Union[str, List[str]]] = Field(None, description="Filter by one or more country codes")
     type: Optional[str] = Field(None, description="Optional filter by filing type code (e.g., 'ANNREP') (real API: 'type')")
     language: Optional[str] = Field(None, description="Optional filter by language code (e.g., 'en', 'de')")
     page: int = Field(1, description="Page number for pagination")
@@ -36,64 +40,234 @@ mcp = FastMCP("Financial Reports API")
 # Tools for Financial Reports API
 
 @mcp.tool()
-async def search_companies(params: CompanySearchParams) -> List[Dict[str, Any]]:
+async def get_filing_type(filing_type_id: int) -> dict:
     """
-    Search for companies by name or other identifying information.
+    Get detailed information about a filing type by its ID.
     
     Args:
-        params: Search parameters including search_term, country, sector, industry, page, and page_size
-    
+        filing_type_id (int): The ID of the filing type.
     Returns:
-        List of matching companies
+        dict: Filing type details.
     """
     api_client = await APIClient.create()
+    return await api_client.get_filing_type(filing_type_id)
+
+@mcp.tool()
+async def list_industries(industry_group: int = None, page: int = 1, page_size: int = 100, search: str = None) -> list:
+    """
+    List all available GICS industries, optionally filtered by industry group.
     
-    result = await api_client.get_companies(
-        search=params.search_term,
-        country=params.country,
-        sector=params.sector,
-        industry=params.industry,
-        page=params.page,
-        page_size=params.page_size
-    )
-    
+    Args:
+        industry_group (int, optional): Filter by industry group ID.
+        page (int, optional): Page number for pagination.
+        page_size (int, optional): Number of results per page.
+        search (str, optional): Search text.
+    Returns:
+        list: List of industry dicts.
+    """
+    api_client = await APIClient.create()
+    result = await api_client.get_industries(industry_group=industry_group, page=page, page_size=page_size, search=search)
     return result.get("results", [])
 
 @mcp.tool()
-async def get_company_detail(company: int) -> Dict[str, Any]:
+async def get_industry(industry_id: int) -> dict:
     """
-    Get detailed information about a specific company (real API: 'company').
+    Get detailed information about a GICS industry by its ID.
     
     Args:
-        company: The unique identifier for the company
-    
+        industry_id (int): The industry ID.
     Returns:
-        Detailed company information
+        dict: Industry details.
     """
     api_client = await APIClient.create()
-    return await api_client.get_company_detail(company)
+    return await api_client.get_industry(industry_id)
+
+@mcp.tool()
+async def list_industry_groups(sector: int = None, page: int = 1, page_size: int = 100, search: str = None) -> list:
+    """
+    List all available GICS industry groups, optionally filtered by sector.
+    
+    Args:
+        sector (int, optional): Filter by sector ID.
+        page (int, optional): Page number for pagination.
+        page_size (int, optional): Number of results per page.
+        search (str, optional): Search text.
+    Returns:
+        list: List of industry group dicts.
+    """
+    api_client = await APIClient.create()
+    result = await api_client.get_industry_groups(sector=sector, page=page, page_size=page_size, search=search)
+    return result.get("results", [])
+
+@mcp.tool()
+async def get_industry_group(group_id: int) -> dict:
+    """
+    Get detailed information about a GICS industry group by its ID.
+    
+    Args:
+        group_id (int): The industry group ID.
+    Returns:
+        dict: Industry group details.
+    """
+    api_client = await APIClient.create()
+    return await api_client.get_industry_group(group_id)
+
+@mcp.tool()
+async def get_sector(sector_id: int) -> dict:
+    """
+    Get detailed information about a GICS sector by its ID.
+    
+    Args:
+        sector_id (int): The sector ID.
+    Returns:
+        dict: Sector details.
+    """
+    api_client = await APIClient.create()
+    return await api_client.get_sector(sector_id)
+
+@mcp.tool()
+async def list_sub_industries(industry: int = None, page: int = 1, page_size: int = 100, search: str = None) -> list:
+    """
+    List all available GICS sub-industries, optionally filtered by industry.
+    
+    Args:
+        industry (int, optional): Filter by industry ID.
+        page (int, optional): Page number for pagination.
+        page_size (int, optional): Number of results per page.
+        search (str, optional): Search text.
+    Returns:
+        list: List of sub-industry dicts.
+    """
+    api_client = await APIClient.create()
+    result = await api_client.get_sub_industries(industry=industry, page=page, page_size=page_size, search=search)
+    return result.get("results", [])
+
+@mcp.tool()
+async def get_sub_industry(sub_industry_id: int) -> dict:
+    """
+    Get detailed information about a GICS sub-industry by its ID.
+    
+    Args:
+        sub_industry_id (int): The sub-industry ID.
+    Returns:
+        dict: Sub-industry details.
+    """
+    api_client = await APIClient.create()
+    return await api_client.get_sub_industry(sub_industry_id)
+
+@mcp.tool()
+async def list_sources(page: int = 1, page_size: int = 100) -> list:
+    """
+    List all available data sources.
+    
+    Args:
+        page (int, optional): Page number for pagination.
+        page_size (int, optional): Number of results per page.
+    Returns:
+        list: List of data source dicts.
+    """
+    api_client = await APIClient.create()
+    result = await api_client.get_sources(page=page, page_size=page_size)
+    return result.get("results", [])
+
+@mcp.tool()
+async def get_source(source_id: int) -> dict:
+    """
+    Get detailed information about a data source by its ID.
+    
+    Args:
+        source_id (int): The source ID.
+    Returns:
+        dict: Source details.
+    """
+    api_client = await APIClient.create()
+    return await api_client.get_source(source_id)
+
+@mcp.tool()
+async def get_processed_filing(processed_filing_id: int) -> dict:
+    """
+    Get processed content for a filing by its ProcessedFiling ID.
+    
+    Args:
+        processed_filing_id (int): The processed filing ID.
+    Returns:
+        dict: Processed filing content.
+    """
+    api_client = await APIClient.create()
+    return await api_client.get_processed_filing(processed_filing_id)
+
+@mcp.tool()
+async def get_schema(format: str = None, lang: str = None) -> dict:
+    """
+    Get the OpenAPI3 schema for the Financial Reports API.
+    
+    Args:
+        format (str, optional): Format of the schema (e.g. 'json').
+        lang (str, optional): Language of the schema.
+    Returns:
+        dict: OpenAPI3 schema.
+    """
+    api_client = await APIClient.create()
+    return await api_client.get_schema(format=format, lang=lang)
+
+@mcp.tool()
+async def search_companies(params: CompanySearchParams) -> List[Dict[str, Any]]:
+    """
+    Search for companies by name, ISIN, or LEI, with advanced filtering.
+    
+    Args:
+        params (CompanySearchParams): Search parameters (search, countries, sector, industry_group, industry, sub_industry, page, page_size)
+    Returns:
+        List[Dict[str, Any]]: List of matching companies.
+    """
+    api_client = await APIClient.create()
+    result = await api_client.get_companies(
+        search=params.search,
+        countries=params.countries,
+        sector=params.sector,
+        industry_group=params.industry_group,
+        industry=params.industry,
+        sub_industry=params.sub_industry,
+        page=params.page,
+        page_size=params.page_size
+    )
+    return result.get("results", [])
+
+
+@mcp.tool()
+async def get_company_detail(company_id: int) -> Dict[str, Any]:
+    """
+    Get detailed information about a company by its unique numeric ID.
+    
+    Args:
+        company_id (int): The integer ID of the company to retrieve.
+    Returns:
+        Dict[str, Any]: Company details (fields include name, sector, country_code, etc).
+    """
+    api_client = await APIClient.create()
+    return await api_client.get_company_detail(company_id)
+
 
 @mcp.tool()
 async def get_latest_filings(params: FilingSearchParams) -> List[Dict[str, Any]]:
     """
-    Get the latest financial filings, optionally filtered by company or type (real API spec).
+    Get the latest financial filings, optionally filtered by company, ISIN, type, language, etc.
     
     Args:
-        params: Search parameters including company, type, language, page, and page_size
-    
+        params (FilingSearchParams): Search parameters (company, company_isin, countries, type, language, page, page_size)
     Returns:
-        List of filings
+        List[Dict[str, Any]]: List of filings.
     """
     api_client = await APIClient.create()
-    
     result = await api_client.get_filings(
         company=params.company,
+        company_isin=params.company_isin,
+        countries=params.countries,
         type=params.type,
         language=params.language,
         page=params.page,
         page_size=params.page_size
     )
-    
     return result.get("results", [])
 
 @mcp.tool()
@@ -102,10 +276,9 @@ async def get_filing_detail(filing_id: int) -> Dict[str, Any]:
     Get detailed information about a specific filing.
     
     Args:
-        filing_id: The unique identifier for the filing
-    
+        filing_id (int): The unique identifier for the filing.
     Returns:
-        Detailed filing information
+        Dict[str, Any]: Detailed filing information.
     """
     api_client = await APIClient.create()
     return await api_client.get_filing_detail(filing_id)
@@ -115,8 +288,10 @@ async def list_sectors() -> List[Dict[str, Any]]:
     """
     List all available GICS sectors.
     
+    Args:
+        None
     Returns:
-        List of sectors
+        List[Dict[str, Any]]: List of sectors.
     """
     api_client = await APIClient.create()
     result = await api_client.get_sectors()
@@ -127,8 +302,10 @@ async def list_filing_types() -> List[Dict[str, Any]]:
     """
     List all available filing types.
     
+    Args:
+        None
     Returns:
-        List of filing types
+        List[Dict[str, Any]]: List of filing types.
     """
     api_client = await APIClient.create()
     result = await api_client.get_filing_types()
