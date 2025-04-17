@@ -55,12 +55,12 @@ async def get_filing_type(filing_type_id: int) -> dict:
     return await api_client.get_filing_type(filing_type_id)
 
 @mcp.tool()
-async def list_industries(industry_group: int = None, page: int = 1, page_size: int = 100, search: str = None) -> list:
+async def list_industries(industry_group_code: str = None, page: int = 1, page_size: int = 100, search: str = None) -> list:
     """
-    List all available GICS industries, optionally filtered by industry group.
-    
+    List all available GICS industries, optionally filtered by industry group code.
+
     Args:
-        industry_group (int, optional): Filter by industry group ID.
+        industry_group_code (str, optional): Filter by industry group GICS code.
         page (int, optional): Page number for pagination.
         page_size (int, optional): Number of results per page.
         search (str, optional): Search text.
@@ -68,21 +68,21 @@ async def list_industries(industry_group: int = None, page: int = 1, page_size: 
         list: List of industry dicts.
     """
     api_client = await APIClient.create()
-    result = await api_client.get_industries(industry_group=industry_group, page=page, page_size=page_size, search=search)
+    result = await api_client.get_industries(industry_group_code=industry_group_code, page=page, page_size=page_size, search=search)
     return result.get("results", [])
 
 @mcp.tool()
-async def get_industry(industry_id: int) -> dict:
+async def get_industry(industry_code: str) -> dict:
     """
-    Get detailed information about a GICS industry by its ID.
-    
+    Get detailed information about a GICS industry by its code.
+
     Args:
-        industry_id (int): The industry ID.
+        industry_code (int): The industry code.
     Returns:
         dict: Industry details.
     """
     api_client = await APIClient.create()
-    return await api_client.get_industry(industry_id)
+    return await api_client.get_industry_by_code(industry_code)
 
 @mcp.tool()
 async def list_industry_groups(sector_code: str = None, page: int = 1, page_size: int = 100, search: str = None) -> list:
@@ -102,38 +102,38 @@ async def list_industry_groups(sector_code: str = None, page: int = 1, page_size
     return result.get("results", [])
 
 @mcp.tool()
-async def get_industry_group(group_id: int) -> dict:
+async def get_industry_group(group_code: int) -> dict:
     """
-    Get detailed information about a GICS industry group by its index.
+    Get detailed information about a GICS industry group by its code.
     
     Args:
-        group_id (int): The industry group index.
+        group_code (int): The industry group code.
     Returns:
         dict: Industry group details.
     """
     api_client = await APIClient.create()
-    return await api_client.get_industry_group(group_id)
+    return await api_client.get_industry_group_by_code(group_code)
 
 @mcp.tool()
-async def get_sector(sector_id: int) -> dict:
+async def get_sector(sector_code: int) -> dict:
     """
-    Get detailed information about a GICS sector by its ID.
+    Get detailed information about a GICS sector by its code.
     
     Args:
-        sector_id (int): The sector ID.
+        sector_code (int): The sector code.
     Returns:
         dict: Sector details.
     """
     api_client = await APIClient.create()
-    return await api_client.get_sector(sector_id)
+    return await api_client.get_sector(sector_code)
 
 @mcp.tool()
-async def list_sub_industries(industry: int = None, page: int = 1, page_size: int = 100, search: str = None) -> list:
+async def list_sub_industries(industry_code: str = None, page: int = 1, page_size: int = 100, search: str = None) -> list:
     """
-    List all available GICS sub-industries, optionally filtered by industry.
-    
+    List all available GICS sub-industries, optionally filtered by industry code.
+
     Args:
-        industry (int, optional): Filter by industry ID.
+        industry_code (str, optional): Filter by industry GICS code.
         page (int, optional): Page number for pagination.
         page_size (int, optional): Number of results per page.
         search (str, optional): Search text.
@@ -141,21 +141,21 @@ async def list_sub_industries(industry: int = None, page: int = 1, page_size: in
         list: List of sub-industry dicts.
     """
     api_client = await APIClient.create()
-    result = await api_client.get_sub_industries(industry=industry, page=page, page_size=page_size, search=search)
+    result = await api_client.get_sub_industries(industry_code=industry_code, page=page, page_size=page_size, search=search)
     return result.get("results", [])
 
 @mcp.tool()
-async def get_sub_industry(sub_industry_id: int) -> dict:
+async def get_sub_industry(sub_industry_code: str) -> dict:
     """
-    Get detailed information about a GICS sub-industry by its ID.
-    
+    Get detailed information about a GICS sub-industry by its code.
+
     Args:
-        sub_industry_id (int): The sub-industry ID.
+        sub_industry_code (int): The sub-industry code.
     Returns:
         dict: Sub-industry details.
     """
     api_client = await APIClient.create()
-    return await api_client.get_sub_industry(sub_industry_id)
+    return await api_client.get_sub_industry_by_code(sub_industry_code)
 
 @mcp.tool()
 async def list_sources(page: int = 1, page_size: int = 100) -> list:

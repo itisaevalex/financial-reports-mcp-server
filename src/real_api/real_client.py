@@ -223,13 +223,10 @@ class RealAPIClient:
             except Exception as e:
                 return self._format_error(e)
 
-    async def get_industries(self, industry_group: Optional[int] = None, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Retrieve a list of all available GICS Industries. Can be filtered by parent industry group ID.
-        """
+    async def get_industries(self, industry_group_code: Optional[str] = None, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
         params = {'page': page, 'page_size': page_size}
-        if industry_group is not None:
-            params['industry_group'] = industry_group
+        if industry_group_code is not None:
+            params['industry_group_code'] = str(industry_group_code)
         if search:
             params['search'] = search
         url = f"{self.base_url}/industries/"
@@ -268,9 +265,21 @@ class RealAPIClient:
             except Exception as e:
                 return self._format_error(e)
 
+    async def get_industry_by_code(self, code: str) -> dict:
+        url = f"{self.base_url}/industries/"
+        params = {"code": code}
+        async with httpx.AsyncClient() as client:
+            resp = await client.get(url, headers=self.headers, params=params)
+            resp.raise_for_status()
+            data = resp.json()
+            results = data.get("results", [])
+            if not results:
+                return {"error": f"Industry with code {code} not found."}
+            return results[0]
+
     async def get_industry_groups(self, sector_code: Optional[str] = None, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
         """
-        Retrieve a list of all available GICS Industry Groups. Can be filtered by parent sector ID.
+        Retrieve a list of all available GICS Industry Groups. Can be filtered by parent sector code.
         """
         params = {'page': page, 'page_size': page_size}
         if sector_code is not None:
@@ -309,6 +318,18 @@ class RealAPIClient:
             except Exception as e:
                 return self._format_error(e)
 
+    async def get_industry_group_by_code(self, code: str) -> dict:
+        url = f"{self.base_url}/industry-groups/"
+        params = {"code": code}
+        async with httpx.AsyncClient() as client:
+            resp = await client.get(url, headers=self.headers, params=params)
+            resp.raise_for_status()
+            data = resp.json()
+            results = data.get("results", [])
+            if not results:
+                return {"error": f"Industry group with code {code} not found."}
+            return results[0]
+    
     async def get_sectors(self, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
         """
         Retrieve a list of all available GICS Sectors.
@@ -330,31 +351,32 @@ class RealAPIClient:
             except Exception as e:
                 return self._format_error(e)
 
-    async def get_sector(self, sector_id: int) -> Dict[str, Any]:
+    async def get_sector(self, sector_code: str) -> Dict[str, Any]:
         """
-        Retrieve details for a single GICS Sector by its primary key.
+        Retrieve details for a single GICS Sector by its code.
         """
-        url = f"{self.base_url}/sectors/{sector_id}/"
+        url = f"{self.base_url}/sectors/"
+        params = {'code': sector_code}
         async with httpx.AsyncClient() as client:
             try:
-                print(f"[API REQUEST] GET {url}")
-                resp = await client.get(url, headers=self.headers)
+                print(f"[API REQUEST] GET {url} params={params}")
+                resp = await client.get(url, headers=self.headers, params=params)
                 resp.raise_for_status()
                 data = resp.json()
-                
-                return data
+                # The API returns a paginated list, so extract the first result
+                results = data.get("results", [])
+                if not results:
+                    return {"error": f"Sector with code {sector_code} not found."}
+                return results[0]
             except httpx.HTTPStatusError as e:
                 return self._format_error(e.response)
             except Exception as e:
                 return self._format_error(e)
 
-    async def get_sub_industries(self, industry: Optional[int] = None, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Retrieve a list of all available GICS Sub-Industries. Can be filtered by parent industry ID.
-        """
+    async def get_sub_industries(self, industry_code: Optional[str] = None, page: int = 1, page_size: int = 100, search: Optional[str] = None) -> Dict[str, Any]:
         params = {'page': page, 'page_size': page_size}
-        if industry is not None:
-            params['industry'] = industry
+        if industry_code is not None:
+            params['industry_code'] = str(industry_code)
         if search:
             params['search'] = search
         url = f"{self.base_url}/sub-industries/"
@@ -389,6 +411,18 @@ class RealAPIClient:
             except Exception as e:
                 return self._format_error(e)
 
+    async def get_sub_industry_by_code(self, code: str) -> dict:
+        url = f"{self.base_url}/sub-industries/"
+        params = {"code": code}
+        async with httpx.AsyncClient() as client:
+            resp = await client.get(url, headers=self.headers, params=params)
+            resp.raise_for_status()
+            data = resp.json()
+            results = data.get("results", [])
+            if not results:
+                return {"error": f"Sub-industry with code {code} not found."}
+            return results[0]
+    
     async def get_sources(self, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
         """
         Retrieve a list of all available data sources.
