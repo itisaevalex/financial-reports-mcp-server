@@ -9,7 +9,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="financial-reports-mcp",
-    version="0.2.0",
+    version="0.3.0",
     author="Alexander Isaev",
     author_email="it.isaev.alex@gmail.com",
     description="An MCP server for accessing financial reports data",

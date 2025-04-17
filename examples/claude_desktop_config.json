@@ -4,7 +4,6 @@
       "command": "python",
       "args": ["-m", "financial_reports_mcp_server"],
       "env": {
-        "USE_MOCK_API": "True",
         "API_KEY": "your_api_key_here"
       }
     }

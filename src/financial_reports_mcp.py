@@ -507,8 +507,7 @@ def run_cli():
     
     # Print startup information
     print(f"Starting Financial Reports MCP Server on {args.host}:{args.port}")
-    print(f"Mock API mode: {os.getenv('USE_MOCK_API', 'True')}")
-    
+        
     # Set environment variables for FastMCP (it uses these internally)
     os.environ["MCP_HOST"] = args.host
     os.environ["MCP_PORT"] = str(args.port)

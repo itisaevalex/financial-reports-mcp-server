@@ -4,7 +4,6 @@
       "command": "docker",
       "args": ["run", "--rm", "-i", "financial-reports-mcp:latest"],
       "env": {
-        "USE_MOCK_API": "True",
         "API_KEY": "your_api_key_here",
         "MCP_TRANSPORT": "stdio"
       }
