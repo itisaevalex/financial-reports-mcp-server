@@ -44,7 +44,7 @@ async def test_mcp_server_direct():
         print("\nTesting list_sectors...")
         try:
             result = await client.call_tool("list_sectors")
-            print(f"Success! Got sectors list")
+            print(f"Success! Got sectors list: {result}")
         except Exception as e:
             print(f"Error: {e}")
         
@@ -52,7 +52,7 @@ async def test_mcp_server_direct():
         print("\nTesting list_filing_types...")
         try:
             result = await client.call_tool("list_filing_types")
-            print(f"Success! Got filing types list")
+            print(f"Success! Got filing types list: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
@@ -60,7 +60,7 @@ async def test_mcp_server_direct():
         print("\nTesting get_filing_type...")
         try:
             result = await client.call_tool("get_filing_type", {"filing_type_id": 1})
-            print(f"Success! Got filing type detail")
+            print(f"Success! Got filing type detail: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
@@ -68,7 +68,7 @@ async def test_mcp_server_direct():
         print("\nTesting list_industries...")
         try:
             result = await client.call_tool("list_industries")
-            print(f"Success! Got industries list")
+            print(f"Success! Got industries list: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
@@ -76,7 +76,7 @@ async def test_mcp_server_direct():
         print("\nTesting get_industry...")
         try:
             result = await client.call_tool("get_industry", {"industry_id": 1})
-            print(f"Success! Got industry detail")
+            print(f"Success! Got industry detail: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
@@ -84,7 +84,7 @@ async def test_mcp_server_direct():
         print("\nTesting list_industry_groups...")
         try:
             result = await client.call_tool("list_industry_groups")
-            print(f"Success! Got industry groups list")
+            print(f"Success! Got industry groups list: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
@@ -92,7 +92,7 @@ async def test_mcp_server_direct():
         print("\nTesting get_industry_group...")
         try:
             result = await client.call_tool("get_industry_group", {"group_id": 1})
-            print(f"Success! Got industry group detail")
+            print(f"Success! Got industry group detail: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
@@ -100,7 +100,7 @@ async def test_mcp_server_direct():
         print("\nTesting get_sector...")
         try:
             result = await client.call_tool("get_sector", {"sector_id": 1})
-            print(f"Success! Got sector detail")
+            print(f"Success! Got sector detail: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
@@ -108,7 +108,7 @@ async def test_mcp_server_direct():
         print("\nTesting list_sub_industries...")
         try:
             result = await client.call_tool("list_sub_industries")
-            print(f"Success! Got sub-industries list")
+            print(f"Success! Got sub-industries list: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
@@ -116,7 +116,7 @@ async def test_mcp_server_direct():
         print("\nTesting get_sub_industry...")
         try:
             result = await client.call_tool("get_sub_industry", {"sub_industry_id": 1})
-            print(f"Success! Got sub-industry detail")
+            print(f"Success! Got sub-industry detail: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
@@ -124,7 +124,7 @@ async def test_mcp_server_direct():
         print("\nTesting list_sources...")
         try:
             result = await client.call_tool("list_sources")
-            print(f"Success! Got sources list")
+            print(f"Success! Got sources list: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
@@ -132,7 +132,7 @@ async def test_mcp_server_direct():
         print("\nTesting get_source...")
         try:
             result = await client.call_tool("get_source", {"source_id": 1})
-            print(f"Success! Got source detail")
+            print(f"Success! Got source detail: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
@@ -140,7 +140,7 @@ async def test_mcp_server_direct():
         print("\nTesting get_processed_filing...")
         try:
             result = await client.call_tool("get_processed_filing", {"processed_filing_id": 1})
-            print(f"Success! Got processed filing detail")
+            print(f"Success! Got processed filing detail: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
@@ -148,7 +148,7 @@ async def test_mcp_server_direct():
         print("\nTesting get_schema...")
         try:
             result = await client.call_tool("get_schema")
-            print(f"Success! Got schema")
+            print(f"Success! Got schema: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
@@ -157,7 +157,7 @@ async def test_mcp_server_direct():
         try:
             search_params = CompanySearchParams(search_term="bank")
             result = await client.call_tool("search_companies", {"params": search_params.model_dump()})
-            print(f"Success! Found companies matching 'bank'")
+            print(f"Success! Found companies matching 'bank': {result}")
         except Exception as e:
             print(f"Error: {e}")
         
@@ -165,7 +165,7 @@ async def test_mcp_server_direct():
         print("\nTesting get_company_detail...")
         try:
             result = await client.call_tool("get_company_detail", {"company_id": 1})
-            print(f"Success! Got company details")
+            print(f"Success! Got company details: {result}")
         except Exception as e:
             print(f"Error: {e}")
         
@@ -174,7 +174,7 @@ async def test_mcp_server_direct():
         try:
             filing_params = FilingSearchParams(company=1)
             result = await client.call_tool("get_latest_filings", {"params": filing_params.model_dump()})
-            print(f"Success! Got latest filings")
+            print(f"Success! Got latest filings: {result}")
         except Exception as e:
             print(f"Error: {e}")
         
@@ -182,7 +182,7 @@ async def test_mcp_server_direct():
         print("\nTesting get_filing_detail...")
         try:
             result = await client.call_tool("get_filing_detail", {"filing_id": 1})
-            print(f"Success! Got filing detail")
+            print(f"Success! Got filing detail: {result}")
         except Exception as e:
             print(f"Error: {e}")
         
@@ -192,7 +192,7 @@ async def test_mcp_server_direct():
         print("\nTesting financial-reports://sectors resource...")
         try:
             result = await client.read_resource("financial-reports://sectors")
-            print(f"Success! Got sectors resource")
+            print(f"Success! Got sectors resource: {result}")
         except Exception as e:
             print(f"Error: {e}")
         
@@ -200,7 +200,7 @@ async def test_mcp_server_direct():
         print("\nTesting financial-reports://filing-types resource...")
         try:
             result = await client.read_resource("financial-reports://filing-types")
-            print(f"Success! Got filing types resource")
+            print(f"Success! Got filing types resource: {result}")
         except Exception as e:
             print(f"Error: {e}")
         
@@ -208,7 +208,7 @@ async def test_mcp_server_direct():
         print("\nTesting financial-reports://companies/1/profile resource...")
         try:
             result = await client.read_resource("financial-reports://companies/1/profile")
-            print(f"Success! Got company profile resource")
+            print(f"Success! Got company profile resource: {result}")
         except Exception as e:
             print(f"Error: {e}")
         
@@ -216,7 +216,7 @@ async def test_mcp_server_direct():
         print("\nTesting financial-reports://companies/1/recent-filings resource...")
         try:
             result = await client.read_resource("financial-reports://companies/1/recent-filings")
-            print(f"Success! Got company recent filings resource")
+            print(f"Success! Got company recent filings resource: {result}")
         except Exception as e:
             print(f"Error: {e}")
         
@@ -224,7 +224,7 @@ async def test_mcp_server_direct():
         print("\nTesting financial-reports://companies/1/recent-filings/3 resource...")
         try:
             result = await client.read_resource("financial-reports://companies/1/recent-filings/3")
-            print(f"Success! Got company recent filings (limit) resource")
+            print(f"Success! Got company recent filings (limit) resource: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
