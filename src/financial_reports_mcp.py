@@ -150,7 +150,7 @@ async def get_sub_industry(sub_industry_code: str) -> dict:
     Get detailed information about a GICS sub-industry by its code.
 
     Args:
-        sub_industry_code (int): The sub-industry code.
+        sub_industry_code (str): The GICS sub-industry code.
     Returns:
         dict: Sub-industry details.
     """
