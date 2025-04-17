@@ -18,7 +18,6 @@ USER appuser
 # Default environment configuration - uses mock API by default
 ENV API_KEY="your_api_key_here" \
     API_BASE_URL="https://api.financialreports.eu/" \
-    USE_MOCK_API="True" \
     MCP_TRANSPORT="stdio"
 
 # Run the application 

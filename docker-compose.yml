@@ -8,7 +8,6 @@ services:
     environment:
       - API_KEY=${API_KEY:-your_api_key_here}
       - API_BASE_URL=${API_BASE_URL:-https://api.financialreports.eu/}
-      - USE_MOCK_API=${USE_MOCK_API:-True}
       - MCP_TRANSPORT=${MCP_TRANSPORT:-stdio}
     # When using stdio transport (Claude Desktop), use:
     # docker-compose run -i financial-reports-mcp
