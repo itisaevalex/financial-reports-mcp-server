@@ -113,7 +113,7 @@ git clone <repository-url>
 cd financial-reports-mcp
 
 # Run with uv
-uv run server.py
+uv run src/financial_reports_mcp.py
 ```
 
 For Claude Desktop, add the following configuration:
@@ -127,7 +127,7 @@ For Claude Desktop, add the following configuration:
         "--directory",
         "/absolute/path/to/financial-reports-mcp",
         "run",
-        "server.py"
+        "src/financial_reports_mcp.py"
       ]
     }
   }
@@ -189,7 +189,13 @@ pip install -r requirements.txt
 python -m src.financial_reports_mcp
 # or
 python src/financial_reports_mcp.py
+
+# Or with uv
+uv run src/financial_reports_mcp.py
 ```
+
+> **Tip:** If you use `uv`, it will use your `.env` file automatically if present in the root. For all methods, ensure you run from the root directory.
+
 
 ### Option 4: Use FastMCP CLI
 
@@ -201,10 +207,10 @@ pip install fastmcp
 
 # Then install the Financial Reports MCP server
 # From the project directory:
-fastmcp install server.py --name "Financial Reports API"
+fastmcp install src/financial_reports_mcp.py --name "Financial Reports API"
 
 # Or run in development mode
-fastmcp dev server.py
+fastmcp dev src/financial_reports_mcp.py
 ```
 
 ## Configuration
@@ -216,20 +222,12 @@ API_KEY="your_api_key_here"
 API_BASE_URL="https://api.financialreports.eu/"
 USE_MOCK_API=True
 ```
-
-- Set `USE_MOCK_API=True` to use mock data (default)
-- Set `USE_MOCK_API=False` to use the real API (requires valid API key)
-
 ## Project Structure
 
-- `server.py` - Simple single-file implementation (recommended for uv)
-- `main.py` - Main entry point for more customizable usage
-- `src/` - Source code directory
-  - `financial_reports_mcp.py` - MCP server implementation
-  - `api_client.py` - API client factory
-  - `mock_api/` - Mock API implementation
-    - `mock_client.py` - Mock API client
-    - JSON files with mock responses
+- `src/` — Source code directory
+  - `financial_reports_mcp.py` — MCP server main entrypoint (all tools/resources defined here)
+  - `api_client.py` — API client factory
+  - `real_api/real_client.py` — Real API client implementation
 - `.env` - Environment variables (not in git)
 - `requirements.txt` - Project dependencies
 - `Dockerfile` & `docker-compose.yml` - Docker configuration
@@ -240,12 +238,34 @@ USE_MOCK_API=True
 
 ## Available Tools
 
-- `search_companies`: Search for companies by name or other identifying information
-- `get_company_detail`: Get detailed information about a specific company
-- `get_latest_filings`: Get the latest financial filings
-- `get_filing_detail`: Get detailed information about a specific filing
-- `list_sectors`: List all available GICS sectors
-- `list_filing_types`: List all available filing types
+- `get_filing_type(filing_type_id)` — Get detailed information about a filing type by its ID
+- `list_industries(industry_group, page, page_size, search)` — List all available GICS industries
+- `get_industry(industry_id)` — Get detailed information about a GICS industry
+- `list_industry_groups(sector, page, page_size, search)` — List all available GICS industry groups
+- `get_industry_group(group_id)` — Get detailed information about a GICS industry group
+- `get_sector(sector_id)` — Get detailed information about a GICS sector
+- `list_sub_industries(industry, page, page_size, search)` — List all available GICS sub-industries
+- `get_sub_industry(sub_industry_id)` — Get detailed information about a GICS sub-industry
+- `list_sources(page, page_size)` — List all available data sources
+- `get_source(source_id)` — Get detailed information about a data source
+- `get_processed_filing(processed_filing_id)` — Get processed content for a filing
+- `get_schema(format, lang)` — Get the OpenAPI3 schema for the API
+- `search_companies(params)` — Search for companies by name, ISIN, LEI, etc.
+- `get_company_detail(company_id)` — Get detailed information about a company
+- `get_latest_filings(params)` — Get the latest financial filings
+- `get_filing_detail(filing_id)` — Get detailed information about a specific filing
+- `list_sectors()` — List all available GICS sectors
+- `list_filing_types()` — List all available filing types
+
+### Additional Resources/Helpers
+- `get_sectors_resource()` — Markdown-formatted list of GICS sectors
+- `get_filing_types_resource()` — Markdown-formatted list of filing types
+- `get_company_profile(company)` — Markdown-formatted company profile
+- `get_company_recent_filings(company, limit)` — Markdown-formatted list of recent filings
+
+### Prompts
+- `search_company_by_name()` — Prompt for searching a company by name
+- `find_latest_annual_reports()` — Prompt for finding latest annual reports
 
 ## Available Resources
 

@@ -11,9 +11,7 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# Use environment variables with defaults
-API_KEY = os.getenv("API_KEY", "your_api_key_here")
-API_BASE_URL = os.getenv("API_BASE_URL", "https://api.financialreports.eu/")
+
 
 class APIClient:
     """
@@ -25,4 +23,7 @@ class APIClient:
         Create and return the real API client.
         """
         from src.real_api.real_client import RealAPIClient
-        return RealAPIClient(API_KEY, API_BASE_URL)
+        import os
+        api_key = os.getenv("API_KEY", "your_api_key_here")
+        api_base_url = os.getenv("API_BASE_URL", "https://api.financialreports.eu/")
+        return RealAPIClient(api_key, api_base_url)

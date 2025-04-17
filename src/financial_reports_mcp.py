@@ -13,6 +13,8 @@ from pydantic import BaseModel, Field
 
 from src.api_client import APIClient
 
+print("[DEBUG] MCP Server API_KEY at startup:", os.getenv("API_KEY"), "repr:", repr(os.getenv("API_KEY")))
+
 class CompanySearchParams(BaseModel):
     """Parameters for searching companies (matches real API spec)."""
     search: Optional[str] = Field(None, description="Text to search for in company names, ISINs, or LEI")
