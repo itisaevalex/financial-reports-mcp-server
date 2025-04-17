@@ -85,12 +85,12 @@ async def get_industry(industry_id: int) -> dict:
     return await api_client.get_industry(industry_id)
 
 @mcp.tool()
-async def list_industry_groups(sector: int = None, page: int = 1, page_size: int = 100, search: str = None) -> list:
+async def list_industry_groups(sector_code: str = None, page: int = 1, page_size: int = 100, search: str = None) -> list:
     """
     List all available GICS industry groups, optionally filtered by sector.
     
     Args:
-        sector (int, optional): Filter by sector ID.
+        sector_code (str, optional): Filter by sector code.
         page (int, optional): Page number for pagination.
         page_size (int, optional): Number of results per page.
         search (str, optional): Search text.
@@ -98,16 +98,16 @@ async def list_industry_groups(sector: int = None, page: int = 1, page_size: int
         list: List of industry group dicts.
     """
     api_client = await APIClient.create()
-    result = await api_client.get_industry_groups(sector=sector, page=page, page_size=page_size, search=search)
+    result = await api_client.get_industry_groups(sector_code=sector_code, page=page, page_size=page_size, search=search)
     return result.get("results", [])
 
 @mcp.tool()
 async def get_industry_group(group_id: int) -> dict:
     """
-    Get detailed information about a GICS industry group by its ID.
+    Get detailed information about a GICS industry group by its index.
     
     Args:
-        group_id (int): The industry group ID.
+        group_id (int): The industry group index.
     Returns:
         dict: Industry group details.
     """
