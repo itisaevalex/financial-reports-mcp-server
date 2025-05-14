@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/itisaevalex-financial-reports-mcp-server-badge.png)](https://mseep.ai/app/itisaevalex-financial-reports-mcp-server)
+
 # Financial Reports MCP Server
 
 ## 🎬 Demo
